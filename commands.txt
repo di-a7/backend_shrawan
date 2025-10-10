@@ -1,0 +1,3 @@
+# create backup file
+python manage.py dumpdata > file_name.json    # save all the datas of the entire project
+python manage.py dumpdata app_name > file_name.json    # save all the datas of the app only

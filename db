@@ -1,0 +1,36 @@
+# Database Design
+# Restaurant Management System
+
+User:
+   - id (Primary Key)
+   - name (string)
+   - email (email)
+   - phone_number (char)
+
+Category:
+   - id (Primary Key)
+   - name (string)
+
+Food:
+   - id(PK)
+   - name (string)
+   - description (text)
+   - price (float)
+   - category_id (Foreign Key)(one to many)
+
+Table:
+   - id(PK)
+   - table_number (string)
+   - capacity (int)
+   - status (available/occupied) (boolean)
+
+Order:
+   - id(PK)
+   - user_id(FK)(one- to -many)
+   - quantity (int)
+   - total_price (float)
+
+OrderItem(Junction Table):
+   - id (PK)
+   - order_id(FK)
+   - food_id(FK)

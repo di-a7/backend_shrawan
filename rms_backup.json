@@ -1,0 +1,18 @@
+[
+   {
+      "model": "rms.category",
+      "pk": 5,
+      "fields": {
+         "name": "Lunch"
+      }
+   },
+   {
+      "model": "rms.food",
+      "pk": 1,
+      "fields": {
+         "name": "Pasta",
+         "price": 150.0,
+         "category": 5
+      }
+   }
+]
