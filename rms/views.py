@@ -6,43 +6,100 @@ from .serializer import CategorySerializer
 # Create your views here.
 
 # Classed Based View
+# ---------- ModelViewSet --------------------
+from rest_framework.viewsets import ModelViewSet
+class CategoryViewset(ModelViewSet):
+   queryset = Category.objects.all()
+   serializer_class = CategorySerializer
+   lookup_field = 'pk'
+
+
+# ---------- VIEWSET --------------------
+# from rest_framework import viewsets
+# class CategoryViewset(viewsets.ViewSet):
+   
+#    def list(self, request):
+#       category = Category.objects.all()
+#       serializer = CategorySerializer(category,many = True)
+#       return Response(serializer.data)
+
+
+
+# ---------- GENERIC VIEW WITH MIXINS --------------------
+# from rest_framework.generics import ListAPIView,CreateAPIView, RetrieveAPIView, DestroyAPIView, UpdateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+# class CategoryAPIView(ListCreateAPIView):
+#    queryset = Category.objects.all()
+#    serializer_class = CategorySerializer
+
+# class CategoryDetailAPIView(RetrieveUpdateDestroyAPIView):
+#    queryset = Category.objects.all()
+#    serializer_class = CategorySerializer
+#    lookup_field = 'pk'
+
+# Table
+
+
+
+#---------- GENERIC VIEW --------------------
+# from rest_framework import generics
+# class CategoryAPIView(generics.GenericAPIView):
+#    queryset = Category.objects
+#    serializer_class = CategorySerializer
+
+#    def get(self, request):
+#       # category = Category.objects.all()
+#       category = self.queryset.all()
+#       serializer = CategorySerializer(category,many = True)
+#       return Response(serializer.data)
+   
+#    def post(self, request):
+#       serializer = CategorySerializer(data = request.data)
+#       serializer.is_valid(raise_exception=True)
+#       serializer.save()
+#       return Response(serializer.data, status=201)
+
+# todo: implement CategoryDetail using GenericAPIView
+
+
+
+
+
 # APIView
-from rest_framework.views import APIView
+# from rest_framework.views import APIView
 
-class CategoryList(APIView):
+# class CategoryList(APIView):
+#    def get(self, request):
+#       category = Category.objects.all()
+#       serializer = CategorySerializer(category,many = True)    # convert object to json: serializetion
+#       return Response(serializer.data)
    
-   def get(self, request):
-      category = Category.objects.all()
-      serializer = CategorySerializer(category,many = True)    # convert object to json: serializetion
-      return Response(serializer.data)
-   
-   def post(self, request):
-      serializer = CategorySerializer(data = request.data)     # json to object : deserialization
-      serializer.is_valid(raise_exception=True)
-      serializer.save()
-      return Response(serializer.data, status=201)
+#    def post(self, request):
+#       serializer = CategorySerializer(data = request.data)     # json to object : deserialization
+#       serializer.is_valid(raise_exception=True)
+#       serializer.save()
+#       return Response(serializer.data, status=201)
 
 
-class CategoryDetail(APIView):
-   def get(self, request, id):
-      category = Category.objects.get(id = id)
-      serializer = CategorySerializer(category)
-      return Response(serializer.data)
+# class CategoryDetail(APIView):
+#    def get(self, request, id):
+#       category = Category.objects.get(id = id)
+#       serializer = CategorySerializer(category)
+#       return Response(serializer.data)
    
-   def put(self, request, id):
-      category = Category.objects.get(id = id)
-      serializer = CategorySerializer(category,data = request.data)
-      serializer.is_valid(raise_exception=True)
-      serializer.save()
-      return Response({"detail":"Category Updated."}, status=200)
+#    def put(self, request, id):
+#       category = Category.objects.get(id = id)
+#       serializer = CategorySerializer(category,data = request.data)
+#       serializer.is_valid(raise_exception=True)
+#       serializer.save()
+#       return Response({"detail":"Category Updated."}, status=200)
    
-   def delete(self, request, id):
-      category = Category.objects.get(id = id)
-      items = OrderItem.objects.filter(food__category = category).count()
-      if items > 0:
-         return Response({"detail":"Category can not be deleted.Category of this name exists in orderitem"})
-      category.delete()
-      return Response({"detail":"Category Deleted."}, status=204)
+#    def delete(self, request, id):
+#       category = Category.objects.get(id = id)
+#       items = OrderItem.objects.filter(food__category = category).count()
+#       if items > 0:
+#          return Response({"detail":"Category can not be deleted.Category of this name exists in orderitem"})
+#       category.delete()
+#       return Response({"detail":"Category Deleted."}, status=204)
 
 
 
