@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Category, OrderItem
-from .serializer import CategorySerializer
+from .models import *
+from .serializer import *
 # Create your views here.
 
 # Classed Based View
@@ -12,6 +12,22 @@ class CategoryViewset(ModelViewSet):
    queryset = Category.objects.all()
    serializer_class = CategorySerializer
    lookup_field = 'pk'
+   
+   def destroy(self, request, *args, **kwargs):
+      category = self.get_object()
+      items = OrderItem.objects.filter(food__category = category).count()
+      if items > 0:
+         return Response({"detail":"Category can not be deleted.Category of this name exists in orderitem"})
+      category.delete()
+      return Response({"detail":"Category Deleted."}, status=204)
+
+class FoodViewset(ModelViewSet):
+   queryset = Food.objects.all()
+   serializer_class = FoodSerializer
+
+
+
+
 
 
 # ---------- VIEWSET --------------------
