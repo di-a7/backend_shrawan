@@ -3,6 +3,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import *
 from .serializer import *
+from rest_framework.pagination import PageNumberPagination
+from rest_framework import filters
 # Create your views here.
 
 # Classed Based View
@@ -22,8 +24,11 @@ class CategoryViewset(ModelViewSet):
       return Response({"detail":"Category Deleted."}, status=204)
 
 class FoodViewset(ModelViewSet):
-   queryset = Food.objects.all()
+   queryset = Food.objects.select_related('category').all()
    serializer_class = FoodSerializer
+   pagination_class = PageNumberPagination
+   filter_backends = [filters.SearchFilter]
+   search_fields = ['name','category__name']
 
 
 

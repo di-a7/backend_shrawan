@@ -20,6 +20,7 @@ class CategorySerializer(serializers.ModelSerializer):
       # or
       # category = Category(**validated_data)
       category = self.Meta.model(**validated_data)
+      category.save()
       return category
 
 
