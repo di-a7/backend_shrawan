@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rms',
+    'user',
     'rest_framework',
+    "rest_framework.authtoken",
     
     "debug_toolbar",
 ]
@@ -142,5 +144,6 @@ INTERNAL_IPS = [
 ]
 
 REST_FRAMEWORK = {
-    'PAGE_SIZE': 20
+    'PAGE_SIZE': 20,
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny',]
 }
