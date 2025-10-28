@@ -5,8 +5,14 @@ from .models import *
 from .serializer import *
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import filters
-from rest_framework import permissions
+# from rest_framework import permissions
+from .permission import IsAuthenticatedOrReadOnly
+from django_filters import rest_framework as dfilter
+from .filters import FoodFilter
+
 # Create your views here.
+
+
 
 # Classed Based View
 # ---------- ModelViewSet --------------------
@@ -15,7 +21,7 @@ class CategoryViewset(ModelViewSet):
    queryset = Category.objects.all()
    serializer_class = CategorySerializer
    lookup_field = 'pk'
-   permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+   permission_classes = [IsAuthenticatedOrReadOnly]
    
    def destroy(self, request, *args, **kwargs):
       category = self.get_object()
@@ -29,10 +35,18 @@ class FoodViewset(ModelViewSet):
    queryset = Food.objects.select_related('category').all()
    serializer_class = FoodSerializer
    pagination_class = PageNumberPagination
-   permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+   permission_classes = [IsAuthenticatedOrReadOnly]
    # permission_classes = [IsAuthenticated]
-   filter_backends = [filters.SearchFilter]
+   filter_backends = [filters.SearchFilter, dfilter.DjangoFilterBackend]
+   # filterset_fields = ['category']
+   filterset_class = FoodFilter
    search_fields = ['name','category__name']
+
+
+
+
+
+
 
 
 

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     
     "debug_toolbar",
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -145,5 +146,7 @@ INTERNAL_IPS = [
 
 REST_FRAMEWORK = {
     'PAGE_SIZE': 20,
-    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny',]
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
 }
