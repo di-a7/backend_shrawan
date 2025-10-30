@@ -3,9 +3,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
+from drf_spectacular.types import OpenApiTypes
 # Create your views here.
 
 class LoginView(APIView):
+   @extend_schema(
+      parameters= [OpenApiParameter(name='username',required=True, type=str)],
+      description='This is a Login API',
+   )
    def post(self, request):
       username = request.data.get('username')
       password = request.data.get('password')
