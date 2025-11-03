@@ -5,8 +5,8 @@ from .models import *
 from .serializer import *
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import filters
-# from rest_framework import permissions
-from .permission import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
+from .permission import IsAuthenticatedOrReadOnly,IsWaiter
 from django_filters import rest_framework as dfilter
 from .filters import FoodFilter
 
@@ -42,6 +42,13 @@ class FoodViewset(ModelViewSet):
    filterset_class = FoodFilter
    search_fields = ['name','category__name']
 
+# Table Viwe
+
+class OrderViewset(ModelViewSet):
+   queryset = Order.objects.prefetch_related('items').all()
+   serializer_class = OrderSerializer
+   pagination_class = PageNumberPagination
+   permission_classes = [IsWaiter]
 
 
 

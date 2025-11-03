@@ -44,15 +44,15 @@ class Order(models.Model):
    user = models.ForeignKey(User, on_delete=models.CASCADE)
    quantity = models.IntegerField()
    total_price = models.FloatField()
-   status = models.CharField(max_length=1, choices=STATUS_CHOICE)
+   status = models.CharField(max_length=1, choices=STATUS_CHOICE, default= PENDING)
    
    def __str__(self):
       return f"{self.user} - {self.status}"
 
 
 class OrderItem(models.Model):
-   order = models.ForeignKey(Order, on_delete=models.PROTECT)
-   food = models.ForeignKey(Food, on_delete=models.PROTECT)
+   order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name='items')
+   food = models.ForeignKey(Food, on_delete=models.PROTECT, related_name='items')
 
 # add gitignore file
 # git init
