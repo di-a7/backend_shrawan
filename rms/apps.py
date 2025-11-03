@@ -6,4 +6,4 @@ class RmsConfig(AppConfig):
     name = 'rms'
     
     def ready(self):
-        from . import signals
+        import rms.signals
